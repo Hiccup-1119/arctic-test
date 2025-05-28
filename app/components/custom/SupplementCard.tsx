@@ -2,7 +2,7 @@ export function SupplementCard(props: any) {
   return (
     <div
       key={props.key}
-      className="bg-white rounded-lg shadow-sm p-4 flex flex-col group overflow-hidden h-[450px]"
+      className="bg-white rounded-lg shadow-sm p-4 flex flex-col group overflow-hidden h-[450px] cursor-pointer"
     >
       {/* Label */}
       {props.label && (

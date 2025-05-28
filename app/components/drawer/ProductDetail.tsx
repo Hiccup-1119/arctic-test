@@ -207,7 +207,7 @@ export function RightDrawer(props: any) {
                 </div>
               </div>
               <div
-                className="flex items-center ml-[20%]"
+                className="flex items-center ml-[20%] cursor-pointer"
                 onClick={() => {
                   props.setOpen(false);
                   props.setCartopen(true);

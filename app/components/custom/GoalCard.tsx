@@ -2,7 +2,7 @@ export function GoalCard(props: any) {
   return (
     <div
       key={props.key}
-      className="bg-white overflow-hidden rounded-lg cursor-pointer group border-0"
+      className="bg-white overflow-hidden rounded-lg cursor-pointer group border-0 cursor-pointer"
     >
       <div className="overflow-hidden w-full h-64">
         <img

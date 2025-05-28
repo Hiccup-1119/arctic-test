@@ -113,7 +113,7 @@ export function CartDetail(props: any) {
             </div>
             <div className="text-[24px] font-bold">$99.99</div>
           </div>
-          <div className="w-full px-[10px] py-[16px] bg-black text-white text-[18px] font-bold text-center rounded-[10px] mt-3">
+          <div className="w-full px-[10px] py-[16px] bg-black text-white text-[18px] font-bold text-center rounded-[10px] mt-3 cursor-pointer">
             Checkout
           </div>
         </div>

@@ -1,4 +1,4 @@
-import {Suspense, useState } from 'react';
+import {Suspense, useState} from 'react';
 import {Await, NavLink, useAsyncValue} from 'react-router';
 import {
   type CartViewPayload,
@@ -30,13 +30,23 @@ export function Header({
     <div className="fixed z-100 w-full p-5">
       <div className="bg-white flex justify-between px-[30px] py-[10px] h-[75px] rounded-[10px]">
         {/* Logo */}
-        <div className="text-xl font-bold flex items-center">UNCMFRT.COM</div>
+        <div className="text-xl font-bold flex items-center cursor-pointer">
+          UNCMFRT.COM
+        </div>
 
         {/* Desktop Menu */}
         <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
-          <img src="/images/header/search.png" aria-label="Search" className="text-xl"/>
+          <img
+            src="/images/header/search.png"
+            aria-label="Search"
+            className="text-xl"
+          />
           {menuItems.map((item) => (
-            <NavLink key={item} to={`/${item.toLowerCase()}`} className="text-gray-800 hover:text-black transition">
+            <NavLink
+              key={item}
+              to={`/${item.toLowerCase()}`}
+              className="text-gray-800 hover:text-black transition"
+            >
               {item}
             </NavLink>
           ))}
@@ -44,15 +54,21 @@ export function Header({
 
         {/* Desktop Right Actions */}
         <div className="hidden md:flex items-center gap-4">
-          <div className="flex items-center hover:bg-gray-200 flex w-[100px] justify-around h-full bg-[#E4E4E4] rounded-[10px] text-black">
-            <div className="flex items-center">Men</div> 
-            <div className='flex items-center bg-white h-[35px] w-[35px] flex justify-center rounded-full'><img src='/images/header/man.png'/></div>
+          <div className="flex items-center hover:bg-gray-200 flex w-[100px] justify-around h-full bg-[#E4E4E4] rounded-[10px] text-black cursor-pointer">
+            <div className="flex items-center">Men</div>
+            <div className="flex items-center bg-white h-[35px] w-[35px] flex justify-center rounded-full">
+              <img src="/images/header/man.png" />
+            </div>
           </div>
-          <div className="hover:bg-gray-800 bg-black h-full text-white rounded-[10px] px-[20px] flex items-center font-bold">
+          <div className="hover:bg-gray-800 bg-black h-full text-white rounded-[10px] px-[20px] flex items-center font-bold cursor-pointer">
             Take The Quiz
           </div>
-          <div className="text-xl w-[30px] flex justify-center"><img src='/images/header/user.png'/></div>
-          <div className="text-xl w-[30px] flex justify-center"><img src='/images/header/cart.png'/></div>
+          <div className="text-xl w-[30px] flex justify-center cursor-pointer">
+            <img src="/images/header/user.png" />
+          </div>
+          <div className="text-xl w-[30px] flex justify-center cursor-pointer">
+            <img src="/images/header/cart.png" />
+          </div>
         </div>
 
         {/* Mobile Toggle */}
@@ -69,7 +85,11 @@ export function Header({
       {isMobileOpen && (
         <div className="md:hidden px-6 pb-4 flex flex-col gap-4 text-sm">
           {menuItems.map((item) => (
-            <NavLink key={item} to={`/${item.toLowerCase()}`} className="text-gray-800 hover:underline">
+            <NavLink
+              key={item}
+              to={`/${item.toLowerCase()}`}
+              className="text-gray-800 hover:underline"
+            >
               {item}
             </NavLink>
           ))}
@@ -77,7 +97,10 @@ export function Header({
             <button className="px-3 py-1 bg-gray-100 rounded-full text-sm flex items-center gap-1">
               Men <span>🧍</span>
             </button>
-            <NavLink to="/quiz" className="px-4 py-2 bg-black text-white rounded-full text-sm font-semibold hover:bg-gray-800">
+            <NavLink
+              to="/quiz"
+              className="px-4 py-2 bg-black text-white rounded-full text-sm font-semibold hover:bg-gray-800"
+            >
               Take The Quiz
             </NavLink>
           </div>
