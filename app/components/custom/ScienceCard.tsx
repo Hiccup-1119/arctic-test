@@ -1,9 +1,6 @@
 export function ScienceCard(props: any) {
   return (
-    <div
-      key={props.key}
-      className="flex flex-col min-w-[250px] w-[350px] cursor-pointer"
-    >
+    <div className="flex flex-col min-w-[250px] w-[350px] cursor-pointer">
       {/* Video or Image */}
       <div className="w-full h-[400px] overflow-hidden rounded-xl bg-black">
         <img src={props.src} className="w-full h-full object-cover" />

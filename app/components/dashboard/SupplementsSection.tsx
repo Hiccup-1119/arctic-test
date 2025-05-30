@@ -78,9 +78,9 @@ export function SupplementsSection() {
 
       {/* Product Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 p-[30px]">
-        {products.map((product) => (
+        {products.map((product, id) => (
           <SupplementCard
-            key={product.id}
+            key={id}
             label={product.label}
             src={product.image}
             alt={product.name}

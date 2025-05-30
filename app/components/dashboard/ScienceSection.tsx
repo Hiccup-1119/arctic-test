@@ -55,9 +55,9 @@ export function ScienceSection() {
         </div>
       </div>
       <div className="flex space-x-4 overflow-x-auto pb-4 justify-center">
-        {products.map((product) => (
+        {products.map((product, id) => (
           <ScienceCard
-            key={product.id}
+            key={id}
             src={product.video}
             title={product.title}
             price={product.price}

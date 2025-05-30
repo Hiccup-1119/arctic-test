@@ -68,4 +68,6 @@ type Params = {
   "/*": {
     "*": string;
   };
+  "/graphiql": {};
+  "/subrequest-profiler": {};
 };
