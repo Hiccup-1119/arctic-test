@@ -25,10 +25,12 @@ export async function loader(args: LoaderFunctionArgs) {
   // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
 
+  const bundledData = loadBundledData(args);
+
   // Await the critical data required to render initial state of the page
   const criticalData = await loadCriticalData(args);
 
-  return {...deferredData, ...criticalData};
+  return {...deferredData, ...criticalData, ...bundledData};
 }
 
 /**
@@ -53,7 +55,7 @@ async function loadCriticalData({context}: LoaderFunctionArgs) {
  */
 function loadDeferredData({context}: LoaderFunctionArgs) {
   const recommendedProducts = context.storefront
-    .query(RECOMMENDED_PRODUCTS_QUERY)
+    .query(PRODUCTS_QUERY)
     .catch((error) => {
       // Log query errors, but don't throw them so the page can still render
       console.error(error);
@@ -65,20 +67,35 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
   };
 }
 
+function loadBundledData({context}: LoaderFunctionArgs) {
+  const bundledProducts = context.storefront
+    .query(COLLECTION_QUERY)
+    .catch((error) => {
+      // Log query errors, but don't throw them so the page can still render
+      console.error(error);
+      return null;
+    });
+
+  return {
+    bundledProducts,
+  };
+}
+
 export default function Homepage() {
   const data = useLoaderData<typeof loader>();
+  console.log(data.bundledProducts);
   return (
     <div className="home">
       <MainSection />
       <GoalsSection />
-      <SupplementsSection />
+      <SupplementsSection products={data.recommendedProducts} />
       <SupplementsIntro />
       <ScienceSection />
       <SpecificSection />
       <IngredientSection />
       <BlogSection />
-      {/* <FeaturedCollection collection={data.featuredCollection} />
-      <RecommendedProducts products={data.recommendedProducts} /> */}
+      {/* <FeaturedCollection collection={data.featuredCollection} /> */}
+      <RecommendedProducts products={data.recommendedProducts} />
     </div>
   );
 }
@@ -149,6 +166,98 @@ const FEATURED_COLLECTION_QUERY = `#graphql
     collections(first: 1, sortKey: UPDATED_AT, reverse: true) {
       nodes {
         ...FeaturedCollection
+      }
+    }
+  }
+` as const;
+
+const COLLECTION_QUERY = `#graphql
+ query GetCollectionsWithProducts($country: CountryCode, $language: LanguageCode) 
+  @inContext(country: $country, language: $language) {
+  collections(first: 50) {
+    nodes {
+      id
+      title
+      handle
+      description
+      image {
+        url
+        altText
+      }
+      products(first: 10, sortKey: CREATED, reverse: true) {
+        nodes {
+          id
+          title
+          handle
+          description
+          productType
+          tags
+          featuredImage {
+            url
+            altText
+          }
+          priceRange {
+            minVariantPrice {
+              amount
+              currencyCode
+            }
+          }
+          variants(first: 5) {
+            nodes {
+              id
+              title
+              selectedOptions {
+                name
+                value
+              }
+            }
+          }
+        }
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+      }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+  }
+}
+` as const;
+
+const PRODUCTS_QUERY = `#graphql
+  query RecommendedProducts($country: CountryCode, $language: LanguageCode)
+    @inContext(country: $country, language: $language) {
+    products(first: 4, sortKey: UPDATED_AT, reverse: true) {
+      nodes {
+        id
+        title
+        handle
+        description
+        tags
+        priceRange {
+          minVariantPrice {
+            amount
+            currencyCode
+          }
+        }
+        featuredImage {
+          id
+          url
+          altText
+        }
+        variants(first: 10) {
+          nodes {
+            id
+            title
+            selectedOptions {
+              name
+              value
+            }
+          }
+        }
       }
     }
   }

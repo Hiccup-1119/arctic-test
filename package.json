@@ -14,9 +14,12 @@
   },
   "prettier": "@shopify/prettier-config",
   "dependencies": {
+    "@edge-runtime/cookies": "^6.0.0",
+    "@remix-run/react": "^2.16.8",
+    "@remix-run/server-runtime": "^2.16.8",
     "@shopify/hydrogen": "2025.5.0",
     "@shopify/remix-oxygen": "^3.0.0",
-    "graphql": "^16.10.0",
+    "graphql": "^16.11.0",
     "graphql-tag": "^2.12.6",
     "isbot": "^5.1.22",
     "lucide-react": "^0.511.0",

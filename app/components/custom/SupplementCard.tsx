@@ -1,12 +1,11 @@
 export function SupplementCard(props: any) {
   return (
-    <div className="bg-white rounded-lg shadow-sm p-4 flex flex-col group overflow-hidden h-[450px] cursor-pointer">
+    <div className="bg-white rounded-lg shadow-sm p-4 flex flex-col group overflow-hidden h-[470px] cursor-pointer">
       {/* Label */}
-      {props.label && (
-        <span className="absolute text-xs font-semibold bg-yellow-300 text-gray-800 px-2 py-1 rounded mb-2 w-fit">
-          {props.label}
-        </span>
-      )}
+
+      <span className="absolute text-xs font-semibold bg-yellow-300 text-gray-800 px-2 py-1 rounded mb-2 w-fit">
+        Best Seller
+      </span>
 
       {/* Image */}
       <img

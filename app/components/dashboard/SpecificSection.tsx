@@ -115,7 +115,7 @@ export function SpecificSection() {
             src={product.image}
             alt={product.name}
             setOpen={setOpen}
-            tag={product.tags}
+            tags={product.tags}
             name={product.name}
             description={product.description}
             price={product.price}
