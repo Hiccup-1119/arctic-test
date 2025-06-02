@@ -373,6 +373,15 @@ export type RecommendedProductsQuery = {
             'id' | 'url' | 'altText' | 'width' | 'height'
           >
         >;
+        variants: {
+          nodes: Array<
+            Pick<StorefrontAPI.ProductVariant, 'id' | 'title'> & {
+              selectedOptions: Array<
+                Pick<StorefrontAPI.SelectedOption, 'name' | 'value'>
+              >;
+            }
+          >;
+        };
       }
     >;
   };
@@ -601,7 +610,7 @@ export type StoreCollectionsQuery = {
           nodes: Array<
             Pick<
               StorefrontAPI.Product,
-              'id' | 'title' | 'handle' | 'description' | 'tags'
+              'id' | 'title' | 'handle' | 'description' | 'tags' | 'variants'
             > & {
               priceRange: {
                 minVariantPrice: Pick<

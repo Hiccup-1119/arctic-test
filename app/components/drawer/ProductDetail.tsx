@@ -1,21 +1,21 @@
 import {useState} from 'react';
+import {useCart} from '@shopify/hydrogen-react';
+import {AddToCartButton} from '../AddToCartButton';
+import type {ProductFragment} from 'storefrontapi.generated';
 
 export function RightDrawer(props: any) {
-  const [variant, setVariant] = useState<'small' | 'medium' | 'large'>(
-    'medium',
-  );
   const [quantity, setQuantity] = useState(1);
   const [plan, setPlan] = useState('subscribe');
 
-  const variants = {
-    small: {label: 'Small', count: '30 Capsules', price: 49.95},
-    medium: {label: 'Medium', count: '60 Capsules', price: 49.95},
-    large: {label: 'Large', count: '90 Capsules', price: 49.95},
-  };
+  // console.log(props.selectedProduct);
 
-  const total = variants[variant].price * quantity;
-  const discount = plan === 'subscribe' ? 0.2 : 0;
-  const finalPrice = total * (1 - discount);
+  const {linesAdd, status} = useCart();
+
+  const allVariants = props.selectedProduct?.variant;
+  const variants = allVariants?.[0];
+  // console.log(variants);
+  const [selectedVariantId, setSelectedVariantId] = useState(variants);
+  const merchandise = {merchandiseId: variants};
   return (
     <div className="relative">
       {/* Toggle Button */}
@@ -29,6 +29,7 @@ export function RightDrawer(props: any) {
       )}
 
       {/* Drawer Panel */}
+
       <div
         className={`fixed top-0 right-0 h-full w-150 bg-white shadow-lg z-500 transform transition-transform duration-300 ${
           props.open ? 'translate-x-0' : 'translate-x-full'
@@ -41,28 +42,31 @@ export function RightDrawer(props: any) {
         </div>
         <div className="pt-0 pr-10 pb-10 pl-10 mx-auto bg-white shadow-lg rounded-lg space-y-6">
           <img
-            src="/images/magtein.png"
+            src={props.selectedProduct?.src}
             alt="Product"
             className="mx-auto w-50 mb-[0px]"
           />
 
           <div>
-            <div className="text-[26px] font-bold">Magnesium L-Threonate</div>
+            <div className="text-[26px] font-bold">
+              {props.selectedProduct?.name}
+            </div>
             <p className="text-gray-500 text-sm">
-              Enhances the quality of sleep.
+              {props.selectedProduct?.description}
             </p>
           </div>
 
           <div className="flex text-xs justify-between mb-[10px]">
             <div>
-              <span className="px-[10px] py-[5px] bg-[#F6F6F5] rounded-[5px] text-[12px] ml-[10px]">
-                {' '}
-                • GMO Free
-              </span>
-              <span className="px-[10px] py-[5px] bg-[#F6F6F5] rounded-[5px] text-[12px]">
-                {' '}
-                • Gluten Free
-              </span>
+              {props.selectedProduct?.tags.map((tag: string, id: number) => (
+                <span
+                  key={id}
+                  className="px-[10px] py-[5px] bg-[#F6F6F5] rounded-[5px] text-[12px] ml-[10px]"
+                >
+                  {' '}
+                  • {tag}
+                </span>
+              ))}
             </div>
             <div className="text-black-500 text-[16px]">★★★★★</div>
           </div>
@@ -72,55 +76,59 @@ export function RightDrawer(props: any) {
           <div className=" border-b border-b-[#d3d3d3] mb-[5px]">
             <div className="flex justify-between border-b border-[#d3d3d3] pb-5">
               <div className="w-[30%] text-left">Variant</div>
-              <div className="w-[17.5%]">Quantity</div>
-              <div className="w-[17.5%]">Price</div>
-              <div className="w-[17.5%]">Discount</div>
-              <div className="w-[17.5%] text-right">Total</div>
+              <div className="w-[25%]">Quantity</div>
+              <div className="w-[20%]">Price</div>
+              <div className="w-[10%]">Discount</div>
+              <div className="w-[15%] text-right">Total</div>
             </div>
             <div>
-              {(
-                Object.entries(variants) as Array<
-                  [
-                    keyof typeof variants,
-                    (typeof variants)[keyof typeof variants],
-                  ]
-                >
-              ).map(([key, v]) => (
-                <div
-                  key={key}
-                  className="flex mt-[10px] items-center mb-[10px]"
-                >
-                  <div className="w-[30%] flex">
-                    <div className="p-2.5 border border-[#d3d3d3] rounded-[10px]">
-                      <img className="w-[40px]" src="/images/magtein.png" />
+              {props.selectedProduct?.variant.map(
+                (vari: string, id: number) => (
+                  <div
+                    key={id}
+                    className="flex mt-[10px] items-center mb-[10px]"
+                  >
+                    <div className="w-[30%] flex">
+                      <div className="p-2.5 border border-[#d3d3d3] rounded-[10px]">
+                        <img
+                          className="w-[40px]"
+                          src={props.selectedProduct.src}
+                        />
+                      </div>
+                      <div className="flex flex-col ml-[10px] justify-center">
+                        <span className="font-medium text-[12px]">
+                          {vari?.title}
+                        </span>
+                        <span className="text-[12px]">
+                          {30 * (id + 1)} Capsules
+                        </span>
+                      </div>
                     </div>
-                    <div className="flex flex-col ml-[10px] justify-center">
-                      <span className="font-medium text-[12px]">{v.label}</span>
-                      <span className="text-[12px]">{v.count}</span>
+                    <div className="w-[25%]">
+                      <div className="w-[80%] flex items-center border border-[#d3d3d3] rounded h-[40px]">
+                        <button
+                          onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                          className="px-3 py-1"
+                        >
+                          -
+                        </button>
+                        <span className="px-4">{quantity}</span>
+                        <button
+                          onClick={() => setQuantity((q) => q + 1)}
+                          className="px-3 py-1"
+                        >
+                          +
+                        </button>
+                      </div>
                     </div>
+                    <span className="w-[20%]">
+                      ${props.selectedProduct?.price} / Each
+                    </span>
+                    <span className="w-[10%] text-center">5%</span>
+                    <span className="w-[15%] text-right">100$</span>
                   </div>
-                  <div className="w-[25%]">
-                    <div className="w-[80%] flex items-center border border-[#d3d3d3] rounded h-[40px]">
-                      <button
-                        onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                        className="px-3 py-1"
-                      >
-                        -
-                      </button>
-                      <span className="px-4">{quantity}</span>
-                      <button
-                        onClick={() => setQuantity((q) => q + 1)}
-                        className="px-3 py-1"
-                      >
-                        +
-                      </button>
-                    </div>
-                  </div>
-                  <span className="w-[20%]">${v.price.toFixed(2)} / Each</span>
-                  <span className="w-[10%] text-center">5%</span>
-                  <span className="w-[15%] text-right">100$</span>
-                </div>
-              ))}
+                ),
+              )}
             </div>
           </div>
 
@@ -206,15 +214,16 @@ export function RightDrawer(props: any) {
                   </button>
                 </div>
               </div>
-              <div
+              <button
                 className="flex items-center ml-[20%] cursor-pointer"
                 onClick={() => {
                   props.setOpen(false);
                   props.setCartopen(true);
                 }}
+                // onClick={handleAddToCart}
               >
-                Add to Cart - ${finalPrice.toFixed(2)}
-              </div>
+                Add to Cart - $500
+              </button>
             </div>
           </div>
 

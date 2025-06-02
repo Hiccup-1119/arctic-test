@@ -55,7 +55,9 @@ export function SupplementsSection({
 
   const [open, setOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState();
   // console.log(products);
+  // console.log(selectedProduct);
 
   return (
     <section className="bg-gray-50 py-16 px-6 md:px-12">
@@ -65,6 +67,7 @@ export function SupplementsSection({
         setOpen={setOpen}
         cartopen={cartOpen}
         setCartopen={setCartOpen}
+        selectedProduct={selectedProduct}
       />
       <CartDetail open={cartOpen} setOpen={setCartOpen} />
       <div className="text-center mb-10 flex justify-center items-center">
@@ -102,6 +105,8 @@ export function SupplementsSection({
                         price={product.priceRange.minVariantPrice.amount}
                         setPlan={setPlan}
                         plan={plan}
+                        variant={product.variants.nodes}
+                        setSelectedProduct={setSelectedProduct}
                       />
                       // <ProductItem key={product.id} product={product} />
                     ))

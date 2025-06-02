@@ -87,7 +87,10 @@ export function SupplementCard(props: any) {
         </div>
         <button
           className="w-full mt-4 py-2 bg-black text-white rounded-lg font-semibold text-sm"
-          onClick={() => props.setOpen(true)}
+          onClick={() => {
+            props.setOpen(true);
+            props.setSelectedProduct(props);
+          }}
         >
           Add to Cart - $49.95
         </button>

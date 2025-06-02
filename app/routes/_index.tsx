@@ -20,6 +20,7 @@ import {SpecificSection} from '~/components/dashboard/SpecificSection';
 import {IngredientSection} from '~/components/dashboard/IngredientSection';
 import {BlogSection} from '~/components/dashboard/BlogSection';
 import {MainSection} from '~/components/dashboard/MainSection';
+import {CartProvider} from '@shopify/hydrogen-react';
 
 export async function loader(args: LoaderFunctionArgs) {
   // Start fetching non-critical data without blocking time to first byte
@@ -84,18 +85,20 @@ function loadCollectionData({context}: LoaderFunctionArgs) {
 export default function Homepage() {
   const data = useLoaderData<typeof loader>();
   return (
-    <div className="home">
-      <MainSection />
-      <GoalsSection />
-      <SupplementsSection products={data.recommendedProducts} />
-      <SupplementsIntro />
-      <ScienceSection />
-      <SpecificSection collection={data.CollectionData} />
-      <IngredientSection />
-      <BlogSection />
-      {/* <FeaturedCollection collection={data.featuredCollection} /> */}
-      <RecommendedProducts products={data.recommendedProducts} />
-    </div>
+    <CartProvider>
+      <div className="home">
+        <MainSection />
+        <GoalsSection />
+        <SupplementsSection products={data.recommendedProducts} />
+        <SupplementsIntro />
+        <ScienceSection />
+        <SpecificSection collection={data.CollectionData} />
+        <IngredientSection />
+        <BlogSection />
+        {/* <FeaturedCollection collection={data.featuredCollection} /> */}
+        {/* <RecommendedProducts products={data.recommendedProducts} /> */}
+      </div>
+    </CartProvider>
   );
 }
 

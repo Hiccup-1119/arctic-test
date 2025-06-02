@@ -1,7 +1,10 @@
 import {useState} from 'react';
 import {CartCard} from '../custom/CartCard';
+import {useCart} from '@shopify/hydrogen-react';
 
 export function CartDetail(props: any) {
+  const {checkoutUrl, status, lines} = useCart();
+  // if (!lines.length) return null;
   return (
     <div className="relative">
       {/* Toggle Button */}
@@ -20,7 +23,7 @@ export function CartDetail(props: any) {
           props.open ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <div className="p-5 flex justify-between border-b border-b-[#d3d3d3]">
+        <div className="p-5 flex justify-between border-b border-b-[#d3d3d3] ove">
           <div className="flex items-center">
             <span className="text-[34px] font-bold">Your Bag</span>
             <div className="text-[18px] bg-black text-white w-[36px] h-[36px] flex items-center justify-center rounded-full ml-[10px]">
@@ -43,7 +46,7 @@ export function CartDetail(props: any) {
             </div>
             <span>$85</span>
           </div>
-          <div className=" bg-[#F6F6F5] p-[10px] rounded-[10px] mt-5">
+          <div className=" bg-[#F6F6F5] p-[10px] rounded-[10px] mt-5 h-[300px] overflow-y-scroll">
             <div className="flex items-center justify-between bg-white rounded-[10px] p-[16px] mb-3">
               <img className="h-[90px] w-[90px]" src="/images/magtein.png" />
               <div className="w-[80%]">
@@ -65,7 +68,49 @@ export function CartDetail(props: any) {
                 </div>
               </div>
             </div>
-            <div className="flex items-center justify-between bg-white rounded-[10px] p-[16px]">
+            <div className="flex items-center justify-between bg-white rounded-[10px] p-[16px]  mb-3">
+              <img className="h-[90px] w-[90px]" src="/images/magtein.png" />
+              <div className="w-[80%]">
+                <div className="flex justify-between">
+                  <span className="text-[14px]">Magnesium L-Threonate</span>
+                  <span className="text-[14px]">$49.95</span>
+                </div>
+                <div className="flex justify-between items-center mt-3">
+                  <div className="w-[140px]">
+                    <div className="flex justify-between items-center border border-[#d3d3d3] rounded h-[40px] bg-white text-black">
+                      <button className="px-3 py-1">-</button>
+                      <span className="px-4">1</span>
+                      <button className="px-3 py-1">+</button>
+                    </div>
+                  </div>
+                  <div className="p-4 rounded-[5px] h-[40px] flex justify-center items-center  border border-dotted border-[#d3d3d3]">
+                    Subscribe & Save 10%
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center justify-between bg-white rounded-[10px] p-[16px]  mb-3">
+              <img className="h-[90px] w-[90px]" src="/images/magtein.png" />
+              <div className="w-[80%]">
+                <div className="flex justify-between">
+                  <span className="text-[14px]">Magnesium L-Threonate</span>
+                  <span className="text-[14px]">$49.95</span>
+                </div>
+                <div className="flex justify-between items-center mt-3">
+                  <div className="w-[140px]">
+                    <div className="flex justify-between items-center border border-[#d3d3d3] rounded h-[40px] bg-white text-black">
+                      <button className="px-3 py-1">-</button>
+                      <span className="px-4">1</span>
+                      <button className="px-3 py-1">+</button>
+                    </div>
+                  </div>
+                  <div className="p-4 rounded-[5px] h-[40px] flex justify-center items-center  border border-dotted border-[#d3d3d3]">
+                    Subscribe & Save 10%
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center justify-between bg-white rounded-[10px] p-[16px]  mb-3">
               <img className="h-[90px] w-[90px]" src="/images/magtein.png" />
               <div className="w-[80%]">
                 <div className="flex justify-between">

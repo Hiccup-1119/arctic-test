@@ -17,7 +17,6 @@ import resetStyles from '~/styles/reset.css?url';
 import appStyles from '~/styles/app.css?url';
 import tailwindCss from './styles/tailwind.css?url';
 import {PageLayout} from './components/PageLayout';
-import {CartProvider} from '@shopify/hydrogen-react';
 
 export type RootLoader = typeof loader;
 
@@ -178,10 +177,7 @@ export function Layout({children}: {children?: React.ReactNode}) {
 }
 
 export default function App() {
-  return;
-  <CartProvider>
-    <Outlet />;
-  </CartProvider>;
+  return <Outlet />;
 }
 
 export function ErrorBoundary() {

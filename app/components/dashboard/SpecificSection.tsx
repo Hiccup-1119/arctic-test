@@ -13,6 +13,7 @@ export function SpecificSection({
   const [open, setOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
   const [plan, setPlan] = useState('subscribe');
+  const [selectedProduct, setSelectedProduct] = useState();
 
   return (
     <section className="bg-gray-50 py-16 px-6 md:px-12 bg-white">
@@ -21,6 +22,7 @@ export function SpecificSection({
         setOpen={setOpen}
         cartopen={cartOpen}
         setCartopen={setCartOpen}
+        selectedProduct={selectedProduct}
       />
       <CartDetail open={cartOpen} setOpen={setCartOpen} />
       {/* Section Heading */}
@@ -87,6 +89,8 @@ export function SpecificSection({
                       price={product.priceRange.minVariantPrice.amount}
                       setPlan={setPlan}
                       plan={plan}
+                      variant={product.variants.nodes}
+                      setSelectedProduct={setSelectedProduct}
                     />
                   ))}
                 </div>
