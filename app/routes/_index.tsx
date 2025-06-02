@@ -25,12 +25,12 @@ export async function loader(args: LoaderFunctionArgs) {
   // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
 
-  const bundledData = loadBundledData(args);
+  const collectionData = loadCollectionData(args);
 
   // Await the critical data required to render initial state of the page
   const criticalData = await loadCriticalData(args);
 
-  return {...deferredData, ...criticalData, ...bundledData};
+  return {...deferredData, ...criticalData, ...collectionData};
 }
 
 /**
@@ -67,8 +67,8 @@ function loadDeferredData({context}: LoaderFunctionArgs) {
   };
 }
 
-function loadBundledData({context}: LoaderFunctionArgs) {
-  const bundledProducts = context.storefront
+function loadCollectionData({context}: LoaderFunctionArgs) {
+  const CollectionData = context.storefront
     .query(COLLECTION_QUERY)
     .catch((error) => {
       // Log query errors, but don't throw them so the page can still render
@@ -77,13 +77,12 @@ function loadBundledData({context}: LoaderFunctionArgs) {
     });
 
   return {
-    bundledProducts,
+    CollectionData,
   };
 }
 
 export default function Homepage() {
   const data = useLoaderData<typeof loader>();
-  console.log(data.bundledProducts);
   return (
     <div className="home">
       <MainSection />
@@ -91,7 +90,7 @@ export default function Homepage() {
       <SupplementsSection products={data.recommendedProducts} />
       <SupplementsIntro />
       <ScienceSection />
-      <SpecificSection />
+      <SpecificSection collection={data.CollectionData} />
       <IngredientSection />
       <BlogSection />
       {/* <FeaturedCollection collection={data.featuredCollection} /> */}
